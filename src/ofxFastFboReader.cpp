@@ -64,8 +64,8 @@ bool ofxFastFboReader::readToPixels(ofFbo &fbo, ofPixelsRef pix, ofImageType typ
 	
 	glReadBuffer(GL_FRONT);
 	
-	fbo.bind();
-	
+	glBindFramebuffer(GL_FRAMEBUFFER, fbo.getIdDrawBuffer());
+
 	glBindBuffer(GL_PIXEL_PACK_BUFFER, pboIds[index]);
 	glReadPixels(0, 0, width, height, glType, GL_UNSIGNED_BYTE, NULL);
 	
@@ -80,8 +80,8 @@ bool ofxFastFboReader::readToPixels(ofFbo &fbo, ofPixelsRef pix, ofImageType typ
 	
 	glBindBuffer(GL_PIXEL_PACK_BUFFER, 0);
 	
-	fbo.unbind();
-	
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
 	return mem != NULL;
 }
 
@@ -126,7 +126,7 @@ bool ofxFastFboReader::readToPixels( ofFbo &fbo, ofFloatPixels& pix, int aGlType
     
     glReadBuffer(GL_FRONT);
     
-    fbo.bind();
+	glBindFramebuffer(GL_FRAMEBUFFER, fbo.getIdDrawBuffer());
     
     glBindBuffer(GL_PIXEL_PACK_BUFFER, pboIds[index]);
     glReadPixels(0, 0, width, height, glReadType, GL_FLOAT, NULL );// (GLubyte*) NULL + (12) );
@@ -143,7 +143,7 @@ bool ofxFastFboReader::readToPixels( ofFbo &fbo, ofFloatPixels& pix, int aGlType
     
     glBindBuffer(GL_PIXEL_PACK_BUFFER, 0);
     
-    fbo.unbind();
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
     
     return mem != NULL;
 }
